@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets, uic, QtGui
+from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt
 import random
 import sys
@@ -11,9 +11,13 @@ class MainWindow(QtWidgets.QWidget):
         self.setup_ui()
 
     def setup_ui(self):
-        uic.loadUi('Ui.ui', self)
+        self.main_layout = QtWidgets.QVBoxLayout(self)
+        self.button = QtWidgets.QPushButton("Draw", self)
+        self.main_layout.addStretch()
+        self.main_layout.addWidget(self.button)
         self.setWindowTitle("Git и желтые окружности")
         self.button.clicked.connect(self.set_paint_active)
+        self.resize(600, 600)
 
     def paintEvent(self, event):
         if self.allow_paint:
@@ -23,8 +27,8 @@ class MainWindow(QtWidgets.QWidget):
             for _ in range(random.randint(1, 10)):
                 color = QtGui.QColor(*random.choices(range(256), k=3))
                 painter.setBrush(QtGui.QBrush(color, Qt.SolidPattern))
-                painter.drawEllipse(random.randint(10, 300),
-                                    random.randint(10, 300), size, size)
+                painter.drawEllipse(random.randint(10, 350),
+                                    random.randint(10, 350), size, size)
             self.allow_paint = False
 
     def set_paint_active(self):
