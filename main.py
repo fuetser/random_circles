@@ -11,13 +11,12 @@ class MainWindow(QtWidgets.QWidget):
         self.setup_ui()
 
     def setup_ui(self):
-        self.main_layout = QtWidgets.QVBoxLayout(self)
-        self.button = QtWidgets.QPushButton("Draw", self)
-        self.main_layout.addStretch()
-        self.main_layout.addWidget(self.button)
-        self.setWindowTitle("Git и желтые окружности")
-        self.button.clicked.connect(self.set_paint_active)
+        self.ui = UiForm()
+        self.layout = QtWidgets.QVBoxLayout(self)
+        self.layout.addWidget(self.ui)
+        self.ui.button.clicked.connect(self.set_paint_active)
         self.resize(600, 600)
+        self.setWindowTitle("Git и желтые окружности")
 
     def paintEvent(self, event):
         if self.allow_paint:
@@ -34,6 +33,18 @@ class MainWindow(QtWidgets.QWidget):
     def set_paint_active(self):
         self.allow_paint = True
         self.update()
+
+
+class UiForm(QtWidgets.QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setup_ui()
+
+    def setup_ui(self):
+        self.main_layout = QtWidgets.QVBoxLayout(self)
+        self.button = QtWidgets.QPushButton("Draw", self)
+        self.main_layout.addStretch()
+        self.main_layout.addWidget(self.button)
 
 
 if __name__ == '__main__':
